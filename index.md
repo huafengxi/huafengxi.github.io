@@ -1,3 +1,6 @@
+---
+title: lazy beaver!
+---
 
 <ul>
   {% for post in site.posts %}
