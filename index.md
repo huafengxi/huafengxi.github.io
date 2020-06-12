@@ -1,4 +1,8 @@
-# decrypt memo
-```
-curl -s https://huafengxi.github.io/memo.gpg | gpg -d  # lift my son
-```
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
