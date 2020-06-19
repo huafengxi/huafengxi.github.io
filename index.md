@@ -1,5 +1,5 @@
 ---
-title: lazy beaver!
+title: Lazy Beaver!
 ---
 
 <ul>
