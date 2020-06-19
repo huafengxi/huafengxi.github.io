@@ -1,5 +1,5 @@
 ---
-title: Lazy Beaver!
+title: lockfree matters.
 ---
 
 <ul>
