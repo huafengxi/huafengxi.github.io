@@ -21,3 +21,13 @@ setpgid(pid, pgid); // 让pgid=0
 pid = setsid();
 ```
 当前进程不能是process group leader，否则setsid会失败。
+
+## daemonize的方法
+daemonize并不需要double fork
+```
+if fork(): os.exit()
+os.setsid()
+```
+这样以及让进程和当前session和当前process group脱离了。
+
+double fork的目的是确保daemon进程不能再获取control tty。
