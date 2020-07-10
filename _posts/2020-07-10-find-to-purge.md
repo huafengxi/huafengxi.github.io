@@ -8,5 +8,5 @@ title: "find to purge"
 
 # example
 ```
-find xxx -cmin +60 --exec rm '{}' \; # purge old file (not modified within 60min)
+find xxx -cmin +60 -exec rm '{}' \; # purge old file (not modified within 60min)
 ```
