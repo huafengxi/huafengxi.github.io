@@ -1,21 +1,21 @@
 ---
 layout: post
-title: "use GPG guard privacy"
+title: "privacy backup to github"
 ---
 
-# 密码管理 
+# 敏感数据的备份
+github允许创建private仓库，如果想进一步提高安全性，可以checkin gpg加密后的文件，或者用git-crypt插件实现commit自动加密。
+
+git-crypt checkout下来之后会自动解密，因此对特别私密的文件，比如密码本，建议手工用gpg加密，只有查看的时候才临时解密。
+
+# 密码本
 尽量不要多个账号共享密码，这样操作要解决的主要问题是密码很容易忘记。
 我的解决方法是用一个文本文件记录各个网站的密码，可以用两种方法保证安全：
 1. 文本文件不要直接记录密码，建议记录hint。
 2. 文本文件可以用gpg加密。
 
-# 敏感数据的备份
-备份数据最好的办法是github，github运行创建private仓库，如果想进一步提高安全性，可以保持gpg加密后的问题，或者用git-crypt插件实现commit自动加密。
-
-git-crypt checkout下来之后会自动解密，因此对特别私密的文件，比如密码本，建议手工用gpg加密，只有查看的时候才临时解密。
-
 # ssh私钥的备份
-`id_rsa.pub`可以公开，`id_rsa`可以设置pass phrase，然后可以用gpg二次加密，这样安全性足够，可以放心放到github仓库里。
+`id_rsa.pub`可以公开，`id_rsa`可以设置pass phrase，然后可以用gpg二次加密，这样安全性足够，
 pass phrase的hint可以放到密码本里。
 
 # gpg key的备份
