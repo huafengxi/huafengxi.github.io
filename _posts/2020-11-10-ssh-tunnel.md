@@ -19,6 +19,15 @@ ssh 172.16.31.131 -R 8123
 `ssh 127.0.0.1 -D :8123 -f -N`
 执行成功后在跳板机上执行`netstat -tnlp | grep 8123`应该可以看到sshd listen在8123端口.
 
+## 如果remote port forwarding失败
+在remote机器上检查`/etc/ssh/sshd_config`
+```
+AllowTcpForwarding yes
+AllowAgentForwarding yes
+GatewayPorts yes
+PermitTunnel yes
+```
+
 # 使用代理
 ## 配置curl代理
 `ALL_PROXY=socks5h://127.0.0.1:8123 curl -s www.baidu.com`
