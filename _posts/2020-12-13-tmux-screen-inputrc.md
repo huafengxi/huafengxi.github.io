@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tmux screen inputrc'
+title: "tmux screen inputrc"
 ---
 
 # tmux.conf
