@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "use google to translate comments'
+title: "use google to translate comments"
 ---
 
 # step1: prepare src file list
