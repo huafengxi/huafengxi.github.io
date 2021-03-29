@@ -27,7 +27,7 @@ vim comp.txt
 
 # step6: import translation result
 ```
-for f in `cat file.list`; do cat $f | code.py upate_comment comp.txt > $f.new && mv $f.new $f; done
+for f in `cat file.list`; do cat $f | code.py update_comment comp.txt > $f.new && mv $f.new $f; done
 ```
 
 # step7: check result
