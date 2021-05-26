@@ -4,23 +4,20 @@ title: git list missing patch
 ---
 
 Is there some critical bugfix I forget to patch to the release branch?
-You can check by following steps.
+You can check it by following command.
 
-# step 1: list commit since fork
+# quick one line shell wrapper
+download git.py from [here](http://051915.oss-cn-hangzhou-zmf.aliyuncs.com/git.py)
+```
+function git_diff() { git log $1..$2 --author=obdev --grep="Author : $3" | git.py extract_description | git.py filt <(git log $2..$1); }
+git_diff origin/2_2_x_release origin/master 元启 # show 22x missing patch
+```
+
+# for debug
+You can check intermediate file.
 ```
 git log origin/2_2_x_release..origin/master --author=obdev --grep='Author : 元启' > a2b.log
 git log origin/master..origin/2_2_x_release --author=obdev --grep='Author : 元启' > b2a.log
-```
-
-# step 2: filter the patched list
-download git.py from [here](http://051915.oss-cn-hangzhou-zmf.aliyuncs.com/git.py)
-```
-# for each commit in a2b.log, if the commit's title appear in b2a.log, then filter it.
-cat a2b.log | git.py extract_description |git.py filt a2b.log
-```
-
-# One step: define helper shell function
-```
-function git_diff() { git log $1..$2 --author=obdev --grep="Author : $3" | git.py extract_description | git.py filt <(git log $2..$1); }
-git_diff origin/2_2_x_release origin/master 元启
+cat a2b.log | git.py extract_description > a2b.log2
+cat a2b.log2 | git.py filt b2a.log
 ```
