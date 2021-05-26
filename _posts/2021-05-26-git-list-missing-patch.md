@@ -26,7 +26,12 @@ cat a2b.log | git.py filt 'Title: .+\n' b2a.log
 cat xxx.log | git.py html
 ```
 
-# wrapped in ob-diff command
+# simple shell script wrapper
 ```
-git.py ob_diff origin/2_2_x_release..origin/master 元启
+b1=origin/2_2_3_release
+b2=origin/master
+author=元启
+git log $b1..$b2 --author=obdev --grep="Author : $author" > a2b.log
+git log $b2..$b1 --author=obdev --grep="Author : $author" > b2a.log
+cat a2b.log | git.py filt 'Title: .+\n' b2a.log
 ```
