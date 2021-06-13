@@ -51,3 +51,11 @@ https://en.wikipedia.org/wiki/Coroutine#Implementations_for_C
 ```
 may achieve the same result via a small block of inline assembly which swaps merely the stack pointer and program counter, and clobbers all other registers. 
 ```
+
+# show backtrace
+```
+define ubt
+set $sp=uthread_ctrl_.jc_
+set $pc=*((uint64_t*)$sp - 1)
+bt
+end
