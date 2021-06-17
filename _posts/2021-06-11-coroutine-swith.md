@@ -52,6 +52,42 @@ https://en.wikipedia.org/wiki/Coroutine#Implementations_for_C
 may achieve the same result via a small block of inline assembly which swaps merely the stack pointer and program counter, and clobbers all other registers. 
 ```
 
+# inline asm最简单的实现
+```
+#define jc_func __attribute__((noipa, optimize(2)))
+jc_func void* jc_make(jc_t* s)
+{
+  void* ret = 0;
+  __asm__ volatile (
+      "leaq 1f(%%rip), %%rbx\n\t"
+      "movq %%rbx, -8(%%rsp)\n\t"
+      "movq %%rsp, (%[s])\n\t"
+      "xorq %[ret], %[ret]\n\t"
+      "1:\n\t"
+      :[ret]"=r"(ret)
+      :[s]"r"(s)
+      :"memory", "rbx", "rbp", "r12", "r13", "r14", "r15");
+  return ret;
+}
+
+jc_func void* jc_switch(jc_t t, jc_t* s, void* x)
+{
+  void* ret = 0;
+  __asm__ volatile (
+      "leaq 1f(%%rip), %%rbx\n\t"
+      "movq %%rbx, -8(%%rsp)\n\t"
+      "movq %%rsp, (%[s])\n\t"
+      "movq %[t], %%rsp\n\t"
+      "movq %[x], %[ret]\n\t"
+      "jmpq *-8(%[t])\n\t"
+      "1:\n\t"
+      :[ret]"=r"(ret)
+      :[s]"r"(s), [t]"r"(t), [x]"r"(x)
+      :"memory", "rbx", "rbp", "r12", "r13", "r14", "r15");
+  return ret;
+}
+```
+
 # show backtrace
 ```
 define ubt
