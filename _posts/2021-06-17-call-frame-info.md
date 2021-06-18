@@ -34,3 +34,9 @@ https://www.imperialviolet.org/2017/01/18/cfi.html
         movq    oR14(%rdi), %r14
         movq    oR15(%rdi), %r15
 ```
+
+# setjmp/longjmp是否要定制cfi
+cfi有两个用处，第一是exception用于unwind stack.
+另一个是gdb backtrace。
+
+如果不指定cfi，后果是longjmp过程中无法backtrace；exception不用担心，因为longjmp过程中不会抛出异常。
