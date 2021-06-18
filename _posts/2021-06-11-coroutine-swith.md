@@ -3,6 +3,9 @@ layout: post
 title: coroutine context switch
 ---
 
+# how many registers?
+ttps://blog.yossarian.net/2020/11/30/How-many-registers-does-an-x86-64-cpu-have
+
 # x86 calling convention
 https://en.wikipedia.org/wiki/X86_calling_conventions
 ```
