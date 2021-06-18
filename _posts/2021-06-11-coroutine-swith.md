@@ -95,3 +95,19 @@ set $sp=uthread_ctrl_.jc_
 set $pc=*((uint64_t*)$sp - 1)
 bt
 end
+
+# inline asm的优化问题
+最保险的是禁止inline，但同时要禁止ipa，并且为了代码干净，需要保证O2优化。
+```
+__attribute__((noipa, noline, optimize(2))
+```
+
+如果想inline，一定要在setjmp的时候把所有寄存器（包括caller preserved寄存器都设置为clobber)
+具体可以参考libdill/libdill.h
+
+# redzone的影响
+如果setjmp被inline了，那么注意一定不能使用redzone的栈空间，最清晰的做法就是不要用任何栈空间。
+
+如果非要用stack保存context，那么有两种做法:
+1. 禁止setjmp inline。
+2. 避开redzone.
