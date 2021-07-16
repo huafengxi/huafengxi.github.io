@@ -13,3 +13,11 @@ x86上使用绝对地址有两种方法: 一种是把地址放入一个寄存器
 
 [推荐使用相对地址](https://reverseengineering.stackexchange.com/questions/19459/calculation-of-jmp-address-through-subtraction)
 
+# 获取main executable的函数地址
+一种方法是让main程序export符号。
+如果可以控制链接选项
+```
+-Wl,--export-dynamic
+```
+
+
