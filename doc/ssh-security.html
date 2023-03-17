@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><title>ssh security</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>ssh security</h1><p>
+<p>
+这篇文章讲述怎么增加ECS上ssh的安全性。
+<p>
+<div><h2><span class="section-number">1</span>修改配置后reload ssh service</h2>
+修改了 =/etc/ssh/sshd_config= 后需要reload sshd
+<pre> sudo service sshd reload
+<p></pre></div>
+<div><h2><span class="section-number">2</span>修改ssh端口号</h2>
+<pre> Port 10222
+<p></pre></div>
+<div><h2><span class="section-number">3</span>禁用root登录</h2>
+  <a href="https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user" >https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user</a>
+<pre> PermitRootLogin no # in /etc/ssh/sshd_config
+<p></pre></div>
+<div><h2><span class="section-number">4</span>禁用密码登录</h2>
+  <a href="https://www.jianshu.com/p/b294e9da09ad" >https://www.jianshu.com/p/b294e9da09ad</a>
+<pre> PasswordAuthentication no
+<p></pre></div></div></body></html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head><title>net proxy</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>net proxy</h1><p>
+<p>
+ssh tunnel的概念可以man ssh, 搜索`-R`,`-D`参数理解下面两个命令的意思
+<p>
+<div><h2><span class="section-number">1</span>ssh建立隧道</h2>
+推荐把目标机器ip设置为环境变量:
+<pre> export rip=xx.xx.xx.xx</pre>
+<div><h3><span class="section-number">1.1</span>如果ssh client足够新</h3>
+一条命令可以建立socks代理
+<pre> ssh $rip -R 8123</pre></div></div>
+<div><h2><span class="section-number">2</span>如果ssh client比较老</h2>
+需要分两步
+<pre> ssh root@$rip -R :8123:127.0.0.1:8123 -f -N</pre>
+执行成功后在`$rip`上执行`netstat -tnlp |grep 8123`应该可以看到sshd listen在8123端口
+<p>
+<pre> ssh 127.0.0.1 -D :8123 -f -N</pre>
+执行成功后在跳板机上执行 `netstat -tnlp | grep 8123` 应该可以看到sshd listen在8123端口.
+<p>
+<div><h3><span class="section-number">2.1</span>如果remote port forwarding失败</h3>
+在remote机器上检查`/etc/ssh/sshd_config`
+<pre>AllowTcpForwarding yes
+AllowAgentForwarding yes
+GatewayPorts yes
+PermitTunnel yes
+<p></pre></div></div>
+<div><h2><span class="section-number">3</span>使用代理</h2>
+<div><h3><span class="section-number">3.1</span>配置curl代理</h3>
+`ALL_PROXY=socks5h://127.0.0.1:8123 curl -s www.baidu.com`
+如果不生效，可以尝试kill跳板机和172.16.31.131上listen在8123端口的sshd进程，然后重来。
+<p></div>
+<div><h3><span class="section-number">3.2</span>配置ssh代理</h3>
+<a href="https://ieevee.com/tech/2017/10/19/ssh-over-socks5.html" >https://ieevee.com/tech/2017/10/19/ssh-over-socks5.html</a>
+see also &lt;script src=&quot;https://gist.github.com/huafengxi/c917ebabf3f26509223550f0f0267ee3.js&quot;&gt;&lt;/script&gt;
+<p>
+修改~/.ssh/config文件 添加如下的行: 
+<pre>Host gitlab.alibaba-inc.com github.com
+    User yuanqi.xhf
+    IdentityFile ~/.ssh/id_dsa.yq
+    ProxyCommand nc -X 5 -x 127.0.0.1:8123 %h %p
+<p></pre>
+其中nc是openbsd netcat，不是Nmap netcat，centos上没有，可以从<a href="这里下载" >https://github.com/huafengxi/bin-mirror</a>
+<p>
+另外，nc也可以用python脚本代替: <a href="https://gist.github.com/huafengxi/c917ebabf3f26509223550f0f0267ee3" >https://gist.github.com/huafengxi/c917ebabf3f26509223550f0f0267ee3</a>
+<p></div></div></div></body></html>

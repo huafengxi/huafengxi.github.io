@@ -1,0 +1,18 @@
+#+Title: ssh security
+
+这篇文章讲述怎么增加ECS上ssh的安全性。
+
+* 修改配置后reload ssh service
+修改了 =/etc/ssh/sshd_config= 后需要reload sshd
+: sudo service sshd reload
+
+* 修改ssh端口号
+: Port 10222
+
+* 禁用root登录
+  [[https://mediatemple.net/community/products/dv/204643810/how-do-i-disable-ssh-login-for-the-root-user]]
+: PermitRootLogin no # in /etc/ssh/sshd_config
+
+* 禁用密码登录
+  [[https://www.jianshu.com/p/b294e9da09ad]]
+: PasswordAuthentication no

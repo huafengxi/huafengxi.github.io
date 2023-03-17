@@ -1,0 +1,68 @@
+#+Title: env setup
+
+* .inputrc
+#+begin_src
+# set editing-mode vi
+# set keymap vi
+set show-all-if-ambiguous on
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+#+end_src
+
+* .tmux.conf
+#+begin_src
+# set -g utf8
+# set-window-option -g utf8 on
+# make tmux display things in 256 colors
+set -g default-terminal "xterm-256color"
+#set -g default-terminal "screen-256color"
+
+# set scrollback history to 10000 (10k)
+set -g history-limit 10000
+
+unbind C-b
+set -g prefix `
+set -g default-shell /usr/local/bin/bash
+bind ` send-prefix
+setw -g mode-keys vi
+
+# reload ~/.tmux.conf using PREFIX r
+bind r source-file ~/.tmux.conf
+
+set-option -g status-style fg=black,bg=blue
+set-window-option -g window-status-style fg=black,bg=default,dim
+set-window-option -g window-status-current-style fg=white,bg=red,bright
+set-option -g message-style fg=white,bg=black,bright
+set-option -g status-interval 30
+
+## The status bar itself.
+set -g status-justify left
+set -g status-left-length 40
+set -g status-left ""
+set -g status-right "%R"
+
+set-option -g display-time 1000
+#+end_src
+
+* spacemacs
+使用spacemacs, 配置文件很简单
+: ln -sf ~/m/spacemacs.d ~/.spacemacs.d
+: git clone https://github.com/syl20bnr/spacemacs .emacs.d
+
+第一次启动emacs的时候需要安装很多package，最后总会有几个package因为gpg key检查通不过而失败。
+
+最简单的处理办法是禁用gpg check, 在 =~/.spacemacs.d/init.el= 中加入
+: (setq package-check-signature nil)
+
+* .proxychains/proxychains.conf
+#+begin_src
+strict_chain
+proxy_dns
+
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+[ProxyList]
+socks4  127.0.0.1 8123
+#+end_src
+通过ssh建立tunnel
+: ssh $lockfree -R :8123:127.0.0.1:13659 -f -N

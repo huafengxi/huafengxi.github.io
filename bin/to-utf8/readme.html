@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><title>to utf8</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>to utf8</h1><p>
+<p>
+<div><h2><span class="section-number">1</span>convert text file to utf-8</h2>
+<pre> ./encoding.py to_utf8 a.txt</pre>
+convert =shift_jis cp932 gbk gb2312= to utf8, old file will be backup as =a.txt.bak=
+detect old file encoding using =chardet=.
+<p>
+use find to apply to all text file in given dir
+<pre> find . -name '*.txt' -exec ./encoding.py \{} \;
+<p></pre></div>
+<div><h2><span class="section-number">2</span>correct gibberish unzipped path</h2>
+see <a href="http://www.mytju.com/classcode/tools/messyCodeRecover.asp" >http://www.mytju.com/classcode/tools/messyCodeRecover.asp</a>
+make sure change the following line in =encoding.py=
+<pre> def get_orig_path(text): return text.decode('shift_jis', 'ignore').encode('utf-8')</pre>
+and backup with
+<pre> cp -al dir dir-backup</pre>
+then:
+<pre> ./encoding.py correct_path dir
+<p></pre></div></div></body></html>
