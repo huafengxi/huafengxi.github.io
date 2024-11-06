@@ -1,0 +1,25 @@
+#+Title: on encoding
+
+* show locale
+: locale
+
+* vim encodings
+: set encoding=utf-8
+: set fileencoding=utf-8
+: set termencoding=utf-8
+: set fileencodings=utf-8,shift_jis
+
+reload file using encodeing
+: e ++enc=shift_jis
+
+* python encoding
+: # -*- coding: utf-8 -*-
+: import sys
+: reload(sys)
+: sys.setdefaultencoding('UTF8')
+
+* chrome encoding
+you can use `Charset` to set/test encoding
+
+* zip path encoding recovery
+http://www.mytju.com/classcode/tools/messyCodeRecover.asp
