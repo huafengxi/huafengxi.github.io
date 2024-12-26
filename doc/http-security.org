@@ -1,0 +1,60 @@
+#+Title: on http
+
+
+* 安全
+** 安全策略
+*** public和private分开
+不要把public内容和private内容混在一起。这有两个方面的含义:
+1. public内容一定要经过发布，这样可以有个审核的过程。public内容可以发布到github pages。
+2. private内容全都需要认证，放在私有ECS上，这样不做精细的权限认证，可以预防很多漏洞。
+
+** basic auth
+basic auth虽然是明文传递密码，但是配合ssl，还是比较安全的。
+
+python有个wsgi basic auth的库，使用特别方便。 [[https://github.com/mvantellingen/wsgi-basic-auth][github]]
+
+** SSL
+   免费ssl证书可以从[[https://letsencrypt.org/]]申请，申请推荐使用certbot工具。
+   
+certbot使用很简单，安装稍微麻烦点。
+: sudo certbot certonly --manual -d *.lockfree.top
+certbot安装参考[[https://certbot.eff.org/lets-encrypt/centosrhel8-nginx]]
+
+支持SSL的python wsgi server: [[https://f.gallai.re/wsgiserver]]
+
+更新证书
+: sudo certbot renew
+: sudo cp /etc/letsencrypt/live/lockfree.top/{fullchain.pem,privkey.pem} ~/.auth/
+
+
+** SSL证书存储
+保留在本地即可。
+*** SSL证书是否要备份
+SSL证书可以免费申请，所以丢弃掉SSL证书是没什么代价的，备份它没有意义。
+
+*** SSL证书是否要共享
+因为SSL证书和域名绑定，一般来说不同机器上共享证书也没有意义。
+
+*** SSL证书/privatekey泄漏怎么办
+证书本来就是可以公开的。privatekey泄漏了一般也不会造成通信被窃听，除非被钓鱼，但是钓鱼还需要伪装DNS。
+
+** 密码存储
+同理，保存在本地即可，可以加密之后存储。启动服务的时候要求输入密码。但是如果本地文件已经被泄漏，保护web server的密码也没多大意义。只是要注意这个密码不能和其它账号共享。
+
+* public内容
+** 策略
+1. public内容只能是static文件，这样的话可以方便host, 目前用github pages。
+2. public内容需要审核，不能随便用通配符，这样很容易漏出敏感数据。另外要保证内容质量，就应该有人工review。
+3. public内容是private内容的子集，也就是说public内容一定是从private内容中提取出来的，private内容应该提供一个pub.sh用于提取public内容。
+
+** 提取public内容的方法
+1. 根据文件列表用git archive拷贝文件。
+2. 把 =.org= 文件转成html文件，同时修正html文件内的 =.org= 链接。
+
+* listen 80/443 port
+[[https://serverfault.com/questions/112795/how-to-run-a-server-on-port-80-as-a-normal-user-on-linux]]
+简而言之，用iptable把80/443路由到8080端口。
+
+* ssh通道
+  如果http server启动在ip1:8080, 希望从ip2:443访问，那么可以通过ssh reverse tunnel实现。 在ip1上执行:
+  : ssh ip2 -R :443:127.0.0.1:8080 -f -N

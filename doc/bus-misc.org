@@ -1,0 +1,28 @@
+#+Title: 各种总线
+
+## why serial bus is faster than paralle bus?
+https://www.howtogeek.com/171947/why-is-serial-data-transmission-faster-than-parallel-data-transmission/
+两个原因:
+1. 多条线要保证所有的线信号同时到达比较困难。
+2. 多条线之间会互相干扰。
+要把一条线速度提升16倍比把8跳线速度提升两倍还更容易。
+
+## ATA/SATA SCSI/SAS NVME
+
+1. SATA是ATA的串行版，也是ATA的改进版，可以认为目前ATA已经被淘汰了。
+2. SAS是SCSI的串行版，也是改进版，SCSI盘几乎完全消失了.
+3. 相比于SCSI/SAS，SATA更便宜，容量更大, 这也是SATA盘还大量存在的原因。
+4. 对SSD来说，趋势是会迁移到NVME接口。NVME是在PCI-e的基础上定义的，它本身不是一个接口。
+SATA express的速度是2GB/s
+
+## PCI-e
+https://blog.csdn.net/s_sunnyy/article/details/79027379
+pci-e速度最多可以到60GB/s
+
+## how to tell a disk is nvme
+https://superuser.com/questions/899366/how-to-check-if-an-attached-ssd-device-is-sata-or-pcie-on-linux/899378
+https://wiki.archlinux.org/title/Solid_state_drive/NVMe
+
+## smartctl
+https://linux.die.net/man/8/smartctl
+ 
