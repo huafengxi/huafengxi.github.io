@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html><head><title>peano</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>peano</h1><p>
+<p>
+<div><h2><span class="section-number">1</span>add</h2>
+D1: a + 0 = a
+D2: a + S(k) = S(a+k)
+<p>
+<div><h3><span class="section-number">1.1</span>交换律</h3>
+<div><h4><span class="section-number">1.1.1</span>引理1</h4>
+a + S(b) = S(a) + b
+<p>
+归纳起点：a + S(0) = S(a) + 0
+假设: a + S(k) = S(a) + k
+递推: a + SS(k) = S(a + S(k)) = S(S(a) + k) = S(a) + S(k)
+<p></div>
+<div><h4><span class="section-number">1.1.2</span>交换律</h4>
+首先证明: 0 + k = k + 0 = k
+0 + S(k) = S(0 + k) = S(k)
+<p>
+假设: a + k = k + a
+a + S(k) = S(a + k) = S(k + a) = k + S(a) = S(k) + a
+<p></div></div>
+<div><h3><span class="section-number">1.2</span>交换律</h3>
+归纳起点: a + 0 + c = a + (0 + c)
+假设: a + k + c = a + (k + c)
+a + S(k) + c = S(a+k) + c  = a+k + S(c) = S(a+k+c)
+a  + (S(k) + c) = a + S(k+c) = S(a+(k+c)) = S(a+k+c)
+<p></div></div></div></body></html>

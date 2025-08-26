@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><title>git list missing patch</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>git list missing patch</h1><p>
+<p>
+Is there some critical bugfix I forget to patch to the release branch?
+You can check it by following command.
+<p>
+<div><h2><span class="section-number">1</span>quick one line shell wrapper</h2>
+download git.py from <a href="/bin/git.py" >/bin/git.py</a>
+<p>
+<pre> function git_diff() { git log $1..$2 --author=OB机器人 --grep=&quot;Author : $3&quot; | git.py extract_description | git.py filt &lt;(git log $2..$1); }
+ git_diff origin/2_2_x_release origin/master 元启 # show 22x missing patch
+<p></pre></div>
+<div><h2><span class="section-number">2</span>for debug</h2>
+You can check intermediate file.
+<p>
+<pre> git log origin/2_2_x_release..origin/master --author=OB机器人 --grep='Author : 元启' &gt; a2b.log
+ git log origin/master..origin/2_2_x_release --author=OB机器人 --grep='Author : 元启' &gt; b2a.log
+ cat a2b.log | git.py extract_description &gt; a2b.log2
+ cat a2b.log2 | git.py filt b2a.log
+<p></pre></div></div></body></html>
