@@ -1,0 +1,18 @@
+#+Title: git list missing patch
+
+Is there some critical bugfix I forget to patch to the release branch?
+You can check it by following command.
+
+* quick one line shell wrapper
+download git.py from [[/bin/git.py]]
+
+: function git_diff() { git log $1..$2 --author=OB机器人 --grep="Author : $3" | git.py extract_description | git.py filt <(git log $2..$1); }
+: git_diff origin/2_2_x_release origin/master 元启 # show 22x missing patch
+
+* for debug
+You can check intermediate file.
+
+: git log origin/2_2_x_release..origin/master --author=OB机器人 --grep='Author : 元启' > a2b.log
+: git log origin/master..origin/2_2_x_release --author=OB机器人 --grep='Author : 元启' > b2a.log
+: cat a2b.log | git.py extract_description > a2b.log2
+: cat a2b.log2 | git.py filt b2a.log

@@ -1,0 +1,26 @@
+#+Title: peano
+
+* add
+D1: a + 0 = a
+D2: a + S(k) = S(a+k)
+
+** 交换律
+*** 引理1
+a + S(b) = S(a) + b
+
+归纳起点：a + S(0) = S(a) + 0
+假设: a + S(k) = S(a) + k
+递推: a + SS(k) = S(a + S(k)) = S(S(a) + k) = S(a) + S(k)
+
+*** 交换律
+首先证明: 0 + k = k + 0 = k
+0 + S(k) = S(0 + k) = S(k)
+
+假设: a + k = k + a
+a + S(k) = S(a + k) = S(k + a) = k + S(a) = S(k) + a
+
+** 交换律
+归纳起点: a + 0 + c = a + (0 + c)
+假设: a + k + c = a + (k + c)
+a + S(k) + c = S(a+k) + c  = a+k + S(c) = S(a+k+c)
+a  + (S(k) + c) = a + S(k+c) = S(a+(k+c)) = S(a+k+c)

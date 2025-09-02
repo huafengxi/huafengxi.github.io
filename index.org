@@ -1,0 +1,61 @@
+#+Title: X代表不可思议
+
+* puzzle
++ [[./doc/physics-puzzle.org][physics puzzle]]
++ [[./doc/puzzle.org][puzzle]]
++ [[./doc/paradox.org][paradox]]
+
+* github
++ [[https://github.com/huafengxi/w][document edit server]]
++ [[https://github.com/huafengxi/org2html.py][convert org-mode file to HTML]]
++ [[https://github.com/huafengxi/pack.py][pack multiple file into a single python script.]]
++ [[https://github.com/huafengxi/tsql][query text file using SQL, powered by sqlite3 and matplotlib.]]
+
++ [[https://github.com/huafengxi/mac-hotkey][mac global hotkey trigger]]
+
++ [[https://github.com/huafengxi/pdo][batch execute shell cmd: xargs with timeout and more]]
++ [[https://github.com/huafengxi/bind-cpu.py][bind cpu affinity by thread name; bind cpu affinity of soft IRQ.]]
+
++ [[https://github.com/huafengxi/cog2][code generation tools, mimic `cog`]]
++ [[https://github.com/huafengxi/hit][easy but bad scripting]]
+* setup env
++ [[./doc/proxy.org][tunel/proxy]]
++ [[./doc/env-setup.org][linux环境有用的配置]]
++ [[./doc/reveal-js.org][use reveal-js for presentation org file]]
+
+* monitor & watch
++ [[./bin/mon.py][collect and dispaly use defined sys stat data]]
++ [[./bin/spw.py][watch multiple process output using tmux]]
++ [[./bin/watch.py][watch from pipe]]
+
+* text parse
++ [[./bin/conv.py][timestamp to date...]]
++ [[./bin/grep.py][extract text from stdin based on regexp]]
+
+* debug script
++ [[./bin/pstack.py][pstack aggregation]]
+
+* on source code
++ [[./doc/git.org][git list missing patch]]
++ [[./bin/sed.py][generate patch using re.sub()]]
++ [[./bin/code-stat.sh][code stat: files, lines, const]]
++ [[./bin/code.py][update copyright, dummp comment]]
++ [[./bin/purge-file.py][remove unrefred file]]
+
+* single file script
++ [[./bin/pmv.py][./pmv.py from to # like re.sub(), but on filenames]]
++ [[./bin/rm-log.py][rm old file when disk full]]
++ [[./bin/fput-svr.py][simple file put server, intend used with c client]]
+
+* pack
++ [[./bin/tea.py][pack config file and elf file to a tar]]
++ [[./bin/elf-patch.py][change elf entry point]]
+
+* perf test
++ [[./bin/watch-cpu.py][run perf if cpu high]]
++ [[./bin/iperf.py][test tcp RTT given packet size]]
+
+* Notes
+  + [[./doc/http-security.org][http安全]]
+  + [[./doc/ssh-security.org][ssh安全]]
+  

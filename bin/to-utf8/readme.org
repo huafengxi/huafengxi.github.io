@@ -1,0 +1,18 @@
+#+Title: to utf8
+
+* convert text file to utf-8
+: ./encoding.py to_utf8 a.txt
+convert =shift_jis cp932 gbk gb2312= to utf8, old file will be backup as =a.txt.bak=
+detect old file encoding using =chardet=.
+
+use find to apply to all text file in given dir
+: find . -name '*.txt' -exec ./encoding.py \{} \;
+
+* correct gibberish unzipped path
+see [[http://www.mytju.com/classcode/tools/messyCodeRecover.asp]]
+make sure change the following line in =encoding.py=
+: def get_orig_path(text): return text.decode('shift_jis', 'ignore').encode('utf-8')
+and backup with
+: cp -al dir dir-backup
+then:
+: ./encoding.py correct_path dir

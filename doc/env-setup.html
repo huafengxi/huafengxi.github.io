@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html><head><title>env setup</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>env setup</h1><p>
+<p>
+<div><h2><span class="section-number">1</span>.inputrc</h2>
+<pre># set editing-mode vi
+# set keymap vi
+set show-all-if-ambiguous on
+&quot;\C-p&quot;: history-search-backward
+&quot;\C-n&quot;: history-search-forward
+<p></pre></div>
+<div><h2><span class="section-number">2</span>.tmux.conf</h2>
+<pre># set -g utf8
+# set-window-option -g utf8 on
+# make tmux display things in 256 colors
+set -g default-terminal &quot;xterm-256color&quot;
+#set -g default-terminal &quot;screen-256color&quot;
+
+# set scrollback history to 10000 (10k)
+set -g history-limit 10000
+
+unbind C-b
+set -g prefix `
+set -g default-shell /usr/local/bin/bash
+bind ` send-prefix
+setw -g mode-keys vi
+
+# reload ~/.tmux.conf using PREFIX r
+bind r source-file ~/.tmux.conf
+
+set-option -g status-style fg=black,bg=blue
+set-window-option -g window-status-style fg=black,bg=default,dim
+set-window-option -g window-status-current-style fg=white,bg=red,bright
+set-option -g message-style fg=white,bg=black,bright
+set-option -g status-interval 30
+
+## The status bar itself.
+set -g status-justify left
+set -g status-left-length 40
+set -g status-left &quot;&quot;
+set -g status-right &quot;%R&quot;
+
+set-option -g display-time 1000
+<p></pre></div>
+<div><h2><span class="section-number">3</span>spacemacs</h2>
+使用spacemacs, 配置文件很简单
+<pre> ln -sf ~/m/spacemacs.d ~/.spacemacs.d
+ git clone https://github.com/syl20bnr/spacemacs .emacs.d
+<p></pre>
+第一次启动emacs的时候需要安装很多package，最后总会有几个package因为gpg key检查通不过而失败。
+<p>
+最简单的处理办法是禁用gpg check, 在 =~/.spacemacs.d/init.el= 中加入
+<pre> (setq package-check-signature nil)
+<p></pre></div>
+<div><h2><span class="section-number">4</span>.proxychains/proxychains.conf</h2>
+<pre>strict_chain
+proxy_dns
+
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+[ProxyList]
+socks4  127.0.0.1 8123</pre>
+通过ssh建立tunnel
+<pre> ssh $lockfree -R :8123:127.0.0.1:13659 -f -N
+<p></pre></div></div></body></html>

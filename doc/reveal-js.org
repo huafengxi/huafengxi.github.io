@@ -1,0 +1,8 @@
+#+Title: reveal-js
+
+* 下载reveal-js
+suppose your WEBROOT is =~/m=
+: git clone git@github.com:huafengxi/bin-mirror.git ~/m/deps
+
+* org2reveal.es
+源代码在 [[/w/bin/org2reveal.es]]

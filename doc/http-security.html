@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head><title>on http</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>on http</h1><p>
+<p>
+<div><h2><span class="section-number">1</span>安全</h2>
+<div><h3><span class="section-number">1.1</span>安全策略</h3>
+<div><h4><span class="section-number">1.1.1</span>public和private分开</h4>
+不要把public内容和private内容混在一起。这有两个方面的含义:
+<ol><li>public内容一定要经过发布，这样可以有个审核的过程。public内容可以发布到github pages。</li>
+<li>private内容全都需要认证，放在私有ECS上，这样不做精细的权限认证，可以预防很多漏洞。
+<p></li></ol></div></div>
+<div><h3><span class="section-number">1.2</span>basic auth</h3>
+basic auth虽然是明文传递密码，但是配合ssl，还是比较安全的。
+<p>
+python有个wsgi basic auth的库，使用特别方便。 <a href="https://github.com/mvantellingen/wsgi-basic-auth" >github</a>
+<p></div>
+<div><h3><span class="section-number">1.3</span>SSL</h3>
+   免费ssl证书可以从<a href="https://letsencrypt.org/" >https://letsencrypt.org/</a>申请，申请推荐使用certbot工具。
+<p>
+certbot使用很简单，安装稍微麻烦点。
+<pre> sudo certbot certonly --manual -d *.lockfree.top</pre>
+certbot安装参考<a href="https://certbot.eff.org/lets-encrypt/centosrhel8-nginx" >https://certbot.eff.org/lets-encrypt/centosrhel8-nginx</a>
+<p>
+支持SSL的python wsgi server: <a href="https://f.gallai.re/wsgiserver" >https://f.gallai.re/wsgiserver</a>
+<p>
+更新证书
+<pre> sudo certbot renew
+ sudo cp /etc/letsencrypt/live/lockfree.top/{fullchain.pem,privkey.pem} ~/.auth/
+<p></pre></div>
+<div><h3><span class="section-number">1.4</span>SSL证书存储</h3>
+保留在本地即可。
+<div><h4><span class="section-number">1.4.1</span>SSL证书是否要备份</h4>
+SSL证书可以免费申请，所以丢弃掉SSL证书是没什么代价的，备份它没有意义。
+<p></div>
+<div><h4><span class="section-number">1.4.2</span>SSL证书是否要共享</h4>
+因为SSL证书和域名绑定，一般来说不同机器上共享证书也没有意义。
+<p></div>
+<div><h4><span class="section-number">1.4.3</span>SSL证书/privatekey泄漏怎么办</h4>
+证书本来就是可以公开的。privatekey泄漏了一般也不会造成通信被窃听，除非被钓鱼，但是钓鱼还需要伪装DNS。
+<p></div></div>
+<div><h3><span class="section-number">1.5</span>密码存储</h3>
+同理，保存在本地即可，可以加密之后存储。启动服务的时候要求输入密码。但是如果本地文件已经被泄漏，保护web server的密码也没多大意义。只是要注意这个密码不能和其它账号共享。
+<p></div></div>
+<div><h2><span class="section-number">2</span>public内容</h2>
+<div><h3><span class="section-number">2.1</span>策略</h3>
+<ol><li>public内容只能是static文件，这样的话可以方便host, 目前用github pages。</li>
+<li>public内容需要审核，不能随便用通配符，这样很容易漏出敏感数据。另外要保证内容质量，就应该有人工review。</li>
+<li>public内容是private内容的子集，也就是说public内容一定是从private内容中提取出来的，private内容应该提供一个pub.sh用于提取public内容。
+<p></li></ol></div>
+<div><h3><span class="section-number">2.2</span>提取public内容的方法</h3>
+<ol><li>根据文件列表用git archive拷贝文件。</li>
+<li>把 =.org= 文件转成html文件，同时修正html文件内的 =.org= 链接。
+<p></li></ol></div></div>
+<div><h2><span class="section-number">3</span>listen 80/443 port</h2>
+<a href="https://serverfault.com/questions/112795/how-to-run-a-server-on-port-80-as-a-normal-user-on-linux" >https://serverfault.com/questions/112795/how-to-run-a-server-on-port-80-as-a-normal-user-on-linux</a>
+简而言之，用iptable把80/443路由到8080端口。
+<p></div>
+<div><h2><span class="section-number">4</span>ssh通道</h2>
+  如果http server启动在ip1:8080, 希望从ip2:443访问，那么可以通过ssh reverse tunnel实现。 在ip1上执行:
+<pre> ssh ip2 -R :443:127.0.0.1:8080 -f -N
+<p></pre></div></div></body></html>

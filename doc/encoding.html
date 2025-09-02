@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head><title>on encoding</title><meta charset="UTF-8"/><style type="text/css">
+body {
+    //font-size: 16px;
+    margin:0px 5px 0px 5px;
+}
+a { text-decoration: none; }
+.section-number { padding-right: 10px; }
+h1,h2,h3,h4,h5 {};
+th { background: black; color: white; }
+th, td {  vertical-align: middle; text-align:left;  font-family: courier, monospace;}
+table, th, td { border: 1px solid black; border-collapse: collapse; }
+code, pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  font-family: courier,monospace;
+}
+
+nav {
+    padding: 1px;
+    margin-bottom: 1px;
+    /* background: DarkSlateGray; */
+}
+nav a {
+    color: Gray;
+    padding: 3px;
+}
+
+</style></head><body><div></div><div><h1>on encoding</h1><p>
+<p>
+<div><h2><span class="section-number">1</span>show locale</h2>
+<pre> locale
+<p></pre></div>
+<div><h2><span class="section-number">2</span>vim encodings</h2>
+<pre> set encoding=utf-8
+ set fileencoding=utf-8
+ set termencoding=utf-8
+ set fileencodings=utf-8,shift_jis
+<p></pre>
+reload file using encodeing
+<pre> e ++enc=shift_jis
+<p></pre></div>
+<div><h2><span class="section-number">3</span>python encoding</h2>
+<pre> # -*- coding: utf-8 -*-
+ import sys
+ reload(sys)
+ sys.setdefaultencoding('UTF8')
+<p></pre></div>
+<div><h2><span class="section-number">4</span>chrome encoding</h2>
+you can use `Charset` to set/test encoding
+<p></div>
+<div><h2><span class="section-number">5</span>zip path encoding recovery</h2>
+http://www.mytju.com/classcode/tools/messyCodeRecover.asp
+<p></div></div></body></html>

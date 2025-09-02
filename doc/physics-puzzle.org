@@ -1,0 +1,8 @@
+#+Title: physics puzzle
+
++ why spinning top not fall?
++ why narrow nozzle speedup water flow? where does the energy come from?
++ what is the energy for capillarity action?
++ why ice is slippery?
++ When a compressed spring dissolves in acid, where does the stored elastic potential energy gone?
++ why tidal acceleration is negligible, but tidal phenomenon are obvious?

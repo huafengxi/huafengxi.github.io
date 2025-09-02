@@ -1,0 +1,48 @@
+#+Title: net proxy
+
+ssh tunnel的概念可以man ssh, 搜索`-R`,`-D`参数理解下面两个命令的意思
+
+* ssh建立隧道
+推荐把目标机器ip设置为环境变量:
+: export rip=xx.xx.xx.xx
+** 如果ssh client足够新
+一条命令可以建立socks代理
+: ssh $rip -R 8123
+* 如果ssh client比较老
+需要分两步
+: ssh root@$rip -R :8123:127.0.0.1:8123 -f -N
+执行成功后在`$rip`上执行`netstat -tnlp |grep 8123`应该可以看到sshd listen在8123端口
+
+: ssh 127.0.0.1 -D :8123 -f -N
+执行成功后在跳板机上执行 `netstat -tnlp | grep 8123` 应该可以看到sshd listen在8123端口.
+
+** 如果remote port forwarding失败
+在remote机器上检查`/etc/ssh/sshd_config`
+#+begin_example
+AllowTcpForwarding yes
+AllowAgentForwarding yes
+GatewayPorts yes
+PermitTunnel yes
+#+end_example
+
+
+* 使用代理
+** 配置curl代理
+`ALL_PROXY=socks5h://127.0.0.1:8123 curl -s www.baidu.com`
+如果不生效，可以尝试kill跳板机和172.16.31.131上listen在8123端口的sshd进程，然后重来。
+
+** 配置ssh代理
+[[https://ieevee.com/tech/2017/10/19/ssh-over-socks5.html]]
+see also <script src="https://gist.github.com/huafengxi/c917ebabf3f26509223550f0f0267ee3.js"></script>
+
+修改~/.ssh/config文件 添加如下的行: 
+#+begin_example
+    Host gitlab.alibaba-inc.com github.com
+        User yuanqi.xhf
+        IdentityFile ~/.ssh/id_dsa.yq
+        ProxyCommand nc -X 5 -x 127.0.0.1:8123 %h %p
+#+end_example
+
+其中nc是openbsd netcat，不是Nmap netcat，centos上没有，可以从[[这里下载][https://github.com/huafengxi/bin-mirror]]
+
+另外，nc也可以用python脚本代替: [[https://gist.github.com/huafengxi/c917ebabf3f26509223550f0f0267ee3]]
